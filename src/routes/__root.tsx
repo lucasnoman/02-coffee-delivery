@@ -5,7 +5,7 @@ import { Header } from '@/components/header'
 
 export const Route = createRootRoute({
   component: () => (
-    <main className="bg-base-background">
+    <>
       <Header />
 
       {/* <div className="flex gap-2 p-2">
@@ -19,6 +19,6 @@ export const Route = createRootRoute({
       <hr /> */}
       <Outlet />
       <TanStackRouterDevtools />
-    </main>
+    </>
   ),
 })
