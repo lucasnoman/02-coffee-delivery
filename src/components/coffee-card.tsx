@@ -1,5 +1,7 @@
 import { ShoppingCart } from 'lucide-react'
 
+import { coffeeList } from '@/backend/coffe-list'
+
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 import {
@@ -10,44 +12,48 @@ import {
   CardTitle,
 } from './ui/card'
 
-type CoffeeCardProps = {
-  id: number
-  name: string
-  description: string
-  price: number
-  imageUrl: string
-  quantity: number
+type coffeeType = (typeof coffeeList)[0]
+type CoffeeCardProps = coffeeType & {
   handleQuantity: (id: number, operation: 'sum' | 'sub') => void
 }
 
-export function CoffeeCard({
-  id,
-  name,
-  description,
-  price,
-  imageUrl,
-  quantity,
-  handleQuantity,
-}: CoffeeCardProps) {
+export function CoffeeCard(coffeProps: CoffeeCardProps) {
+  const {
+    id,
+    name,
+    description,
+    type,
+    price,
+    imageUrl,
+    quantity,
+    handleQuantity,
+  } = coffeProps
   return (
     <Card className="h-[310px] w-64 rounded-bl-[36px] rounded-br-md rounded-tl-md rounded-tr-[36px] bg-base-card">
-      <CardHeader>
+      <CardHeader className="px-4">
         <img
           className="mx-auto -mt-10 size-[120px]"
           src={imageUrl}
           alt="Café expresso"
         />
-        <Badge className="mx-auto mb-4 mt-3 w-fit bg-yellow-light text-[10px] text-yellow-default">
-          TRADICIONAL
-        </Badge>
+        <span className="flex justify-center gap-1">
+          {type.map((type) => (
+            <Badge
+              key={type}
+              className=" mb-4 mt-3 w-fit bg-yellow-light text-[10px] text-yellow-default"
+            >
+              {type}
+            </Badge>
+          ))}
+        </span>
         <CardTitle className="mb-2 mt-4 text-center font-baloo text-xl">
           {name}
         </CardTitle>
-        <CardDescription className="mb-8 mt-2 text-center">
+        <CardDescription className="mb-8 mt-2 w-full text-center text-sm leading-[1.3]">
           {description}
         </CardDescription>
       </CardHeader>
-      <CardFooter className="mb-5 mt-[33px] flex justify-between">
+      <CardFooter className="flex justify-between">
         <p>
           <span className="text-sm leading-[1.3]">R$ </span>
           <span className="font-baloo text-2xl font-extrabold leading-[1.3] text-base-text antialiased">
