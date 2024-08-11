@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { DollarSign, MapPinHouse } from 'lucide-react'
 
 import { AddressForm } from './-AddressForm'
+import { PaymentForm } from './-PaymentForm'
 
 export const Route = createFileRoute('/confirmation/')({
   component: ConfirmationPage,
@@ -9,7 +10,7 @@ export const Route = createFileRoute('/confirmation/')({
 
 export function ConfirmationPage() {
   return (
-    <main className="mx-40 flex justify-between border">
+    <main className="mx-40 mb-32 flex justify-between border">
       <article className="w-[640px] border border-red-500">
         <h1 className="font-baloo text-lg font-bold leading-[1.3]">
           Complete seu pedido
@@ -31,7 +32,7 @@ export function ConfirmationPage() {
           <AddressForm />
         </section>
 
-        <section className="rounded-md bg-base-card p-10">
+        <section className="space-y-8 rounded-md bg-base-card p-10">
           <header className="flex items-start gap-2">
             <DollarSign size={22} className="stroke-purple-default" />
             <span className="space-y-[2px]">
@@ -42,11 +43,7 @@ export function ConfirmationPage() {
             </span>
           </header>
 
-          <div>
-            <span>Radio item</span>
-            <span>Radio item</span>
-            <span>Radio item</span>
-          </div>
+          <PaymentForm />
         </section>
       </article>
 
