@@ -28,12 +28,12 @@ export function CoffeeContextProvider({
         return eachCoffee
       })
     } else {
-      updatedList = coffeeList.map((coffe) => {
-        if (coffe.id === id) {
-          if (coffe.quantity === 0) return coffe
-          return { ...coffe, quantity: (coffe.quantity -= 1) }
+      updatedList = coffeeList.map((coffee) => {
+        if (coffee.id === id) {
+          if (coffee.quantity === 0) return coffee
+          return { ...coffee, quantity: (coffee.quantity -= 1) }
         }
-        return coffe
+        return coffee
       })
     }
 
