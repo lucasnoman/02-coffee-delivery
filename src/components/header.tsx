@@ -8,7 +8,7 @@ import logo from '../assets/logo.png'
 import { Button } from './ui/button'
 
 export function Header() {
-  const { coffee } = useContext(CoffeeContext)
+  const { coffees: coffee } = useContext(CoffeeContext)
 
   const coffeeAmount = coffee.reduce((accumulator, coffeeDetails) => {
     coffeeDetails.quantity !== 0 && (accumulator += coffeeDetails.quantity)

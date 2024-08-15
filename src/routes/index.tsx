@@ -10,7 +10,7 @@ export const Route = createFileRoute('/')({
 })
 
 function Index() {
-  const { coffee, handleQuantity } = useContext(CoffeeContext)
+  const { coffees: coffee, handleQuantity } = useContext(CoffeeContext)
   return (
     <>
       <Intro />
