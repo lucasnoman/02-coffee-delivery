@@ -1,8 +1,6 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { UseFormReturn } from 'react-hook-form'
 import { z } from 'zod'
 
-import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -16,48 +14,26 @@ import { addressSchema } from './-AddressType'
 
 type FormDataType = z.infer<typeof addressSchema>
 
-export function AddressForm() {
-  const addressForm = useForm<FormDataType>({
-    resolver: zodResolver(addressSchema),
-    defaultValues: {
-      cep: '',
-      rua: '',
-      numero: '',
-      complemento: '',
-      bairro: '',
-      cidade: '',
-      uf: '',
-    },
-  })
+type AddressFormProps = {
+  addressForm: UseFormReturn<FormDataType>
+}
 
-  function onSubmit(values: FormDataType) {
-    console.log(values)
-  }
-
+export function AddressForm({ addressForm }: AddressFormProps) {
   return (
     <Form {...addressForm}>
-      <form
-        onSubmit={addressForm.handleSubmit(onSubmit)}
-        className="flex flex-wrap gap-x-3 gap-y-4"
-      >
-        <div className="w-full">
-          <FormField
-            control={addressForm.control}
-            name="cep"
-            render={({ field }) => (
-              <FormItem className="w-[200px]">
-                <FormControl>
-                  <Input
-                    placeholder="CEP"
-                    {...field}
-                    className="ring-red-500"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+      <form className="flex flex-wrap gap-x-3 gap-y-4">
+        <FormField
+          control={addressForm.control}
+          name="cep"
+          render={({ field }) => (
+            <FormItem className="w-[200px]">
+              <FormControl>
+                <Input placeholder="CEP" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={addressForm.control}
           name="rua"
@@ -130,8 +106,6 @@ export function AddressForm() {
             </FormItem>
           )}
         />
-        {/* REVIEW remover esse botão */}
-        <Button type="submit">Submit</Button>
       </form>
     </Form>
   )

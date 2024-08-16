@@ -1,17 +1,29 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { DollarSign, MapPinHouse } from 'lucide-react'
 import { useContext } from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 import { CheckoutCard } from '@/components/CheckoutCard'
 import { Button } from '@/components/ui/button'
 import { CoffeeContext } from '@/contexts/coffee-context'
 import { transformCurrency } from '@/shared/utils'
 
-import { AddressForm } from './-AddressForm'
-import { PaymentForm } from './-PaymentForm'
+import { AddressForm } from './-AddressForm.tsx'
+import { addressSchema } from './-AddressType.ts'
+import { PaymentForm } from './-PaymentForm.tsx'
 
 export const Route = createFileRoute('/confirmation/')({
   component: ConfirmationPage,
+})
+
+type FormDataType = z.infer<typeof addressSchema>
+
+const FormSchema = z.object({
+  paymentType: z.enum(['credit', 'debit', 'cash'], {
+    required_error: 'You need to select a payment type.',
+  }),
 })
 
 export function ConfirmationPage() {
@@ -22,6 +34,29 @@ export function ConfirmationPage() {
     return accumulator + coffee.price * coffee.quantity
   }, 0)
   const totalValueWithTax = totalValue + deliveryTax
+
+  const addressForm = useForm<FormDataType>({
+    resolver: zodResolver(addressSchema),
+    defaultValues: {
+      cep: '',
+      rua: '',
+      numero: '',
+      complemento: '',
+      bairro: '',
+      cidade: '',
+      uf: '',
+    },
+  })
+  const paymentForm = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+  })
+
+  function handleForm(): object {
+    const addressFormValues = addressForm.getValues()
+    const paymentFormValues = paymentForm.getValues()
+
+    return { addressFormValues, paymentFormValues }
+  }
 
   return (
     <main className="mx-40 mb-32 flex justify-between">
@@ -43,7 +78,7 @@ export function ConfirmationPage() {
             </span>
           </header>
 
-          <AddressForm />
+          <AddressForm addressForm={addressForm} />
         </section>
 
         <section className="space-y-8 rounded-md bg-base-card p-10">
@@ -57,7 +92,7 @@ export function ConfirmationPage() {
             </span>
           </header>
 
-          <PaymentForm />
+          <PaymentForm paymentForm={paymentForm} />
         </section>
       </article>
 
@@ -81,7 +116,11 @@ export function ConfirmationPage() {
             )
           })}
 
-          <section className="space-y-3 pt-6 text-sm text-base-text">
+          <section
+            className={`space-y-3 ${
+              coffees.every((coffee) => coffee.quantity === 0) ? '' : 'pt-6'
+            } text-sm text-base-text`}
+          >
             <p className="flex justify-between">
               <span>Total de itens</span>
               <span>{transformCurrency(totalValue)}</span>
@@ -96,7 +135,9 @@ export function ConfirmationPage() {
             </p>
           </section>
 
-          <Button className="w-full">CONFIRMAR PEDIDO</Button>
+          <Button className="w-full" onClick={handleForm}>
+            <Link to="">CONFIRMAR PEDIDO</Link>
+          </Button>
         </div>
       </aside>
     </main>
