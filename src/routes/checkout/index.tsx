@@ -14,7 +14,7 @@ import { AddressForm } from './-AddressForm.tsx'
 import { addressSchema } from './-AddressType.ts'
 import { PaymentForm } from './-PaymentForm.tsx'
 
-export const Route = createFileRoute('/confirmation/')({
+export const Route = createFileRoute('/checkout/')({
   component: ConfirmationPage,
 })
 

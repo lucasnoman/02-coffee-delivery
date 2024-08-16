@@ -25,7 +25,7 @@ export function Header() {
         <span className="rounded-md bg-purple-light p-2 text-sm text-purple-default">
           <MapPin className="inline" size={22} /> Belo Horizonte, MG
         </span>
-        <Link to="/confirmation">
+        <Link to="/checkout">
           <Button className="relative bg-yellow-light p-2 hover:bg-yellow-light/70">
             <ShoppingCart size={22} className="stroke-yellow-dark" />
             <span className="absolute -right-2 -top-2 size-5 rounded-full bg-yellow-dark text-center">

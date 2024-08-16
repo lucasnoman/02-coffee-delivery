@@ -14,7 +14,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
-import { Route as ConfirmationIndexImport } from './routes/confirmation/index'
+import { Route as CheckoutIndexImport } from './routes/checkout/index'
 
 // Create Virtual Routes
 
@@ -32,8 +32,8 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const ConfirmationIndexRoute = ConfirmationIndexImport.update({
-  path: '/confirmation/',
+const CheckoutIndexRoute = CheckoutIndexImport.update({
+  path: '/checkout/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -55,11 +55,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutLazyImport
       parentRoute: typeof rootRoute
     }
-    '/confirmation/': {
-      id: '/confirmation/'
-      path: '/confirmation'
-      fullPath: '/confirmation'
-      preLoaderRoute: typeof ConfirmationIndexImport
+    '/checkout/': {
+      id: '/checkout/'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -70,7 +70,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
   AboutLazyRoute,
-  ConfirmationIndexRoute,
+  CheckoutIndexRoute,
 })
 
 /* prettier-ignore-end */
@@ -83,7 +83,7 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/about",
-        "/confirmation/"
+        "/checkout/"
       ]
     },
     "/": {
@@ -92,8 +92,8 @@ export const routeTree = rootRoute.addChildren({
     "/about": {
       "filePath": "about.lazy.tsx"
     },
-    "/confirmation/": {
-      "filePath": "confirmation/index.tsx"
+    "/checkout/": {
+      "filePath": "checkout/index.tsx"
     }
   }
 }
