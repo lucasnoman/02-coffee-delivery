@@ -15,6 +15,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as CheckoutIndexImport } from './routes/checkout/index'
+import { Route as SuccessDataImport } from './routes/success/$data'
 
 // Create Virtual Routes
 
@@ -37,6 +38,11 @@ const CheckoutIndexRoute = CheckoutIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const SuccessDataRoute = SuccessDataImport.update({
+  path: '/success/$data',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -55,6 +61,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutLazyImport
       parentRoute: typeof rootRoute
     }
+    '/success/$data': {
+      id: '/success/$data'
+      path: '/success/$data'
+      fullPath: '/success/$data'
+      preLoaderRoute: typeof SuccessDataImport
+      parentRoute: typeof rootRoute
+    }
     '/checkout/': {
       id: '/checkout/'
       path: '/checkout'
@@ -70,6 +83,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
   AboutLazyRoute,
+  SuccessDataRoute,
   CheckoutIndexRoute,
 })
 
@@ -83,6 +97,7 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/about",
+        "/success/$data",
         "/checkout/"
       ]
     },
@@ -91,6 +106,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/about": {
       "filePath": "about.lazy.tsx"
+    },
+    "/success/$data": {
+      "filePath": "success/$data.tsx"
     },
     "/checkout/": {
       "filePath": "checkout/index.tsx"

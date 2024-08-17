@@ -51,11 +51,11 @@ export function ConfirmationPage() {
     resolver: zodResolver(FormSchema),
   })
 
-  function handleForm(): object {
+  function handleForm() {
     const addressFormValues = addressForm.getValues()
     const paymentFormValues = paymentForm.getValues()
 
-    return { addressFormValues, paymentFormValues }
+    return { data: JSON.stringify({ addressFormValues, paymentFormValues }) }
   }
 
   return (
@@ -135,8 +135,10 @@ export function ConfirmationPage() {
             </p>
           </section>
 
-          <Button className="w-full" onClick={handleForm}>
-            <Link to="">CONFIRMAR PEDIDO</Link>
+          <Button className="w-full" asChild>
+            <Link to="/success/$data" params={handleForm()}>
+              CONFIRMAR PEDIDO
+            </Link>
           </Button>
         </div>
       </aside>
